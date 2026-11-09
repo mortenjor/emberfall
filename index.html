@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Emberfall" />
+    <meta name="theme-color" content="#120d08" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icon-512.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@500;700&display=swap" rel="stylesheet" />
+    <title>Emberfall</title>
+    <script type="module" crossorigin src="./assets/index-CW3u1XSF.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DHwwqoV4.css">
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="scene"></canvas>
+      <div id="world-layer"></div>
+
+      <div id="hud" class="hidden">
+        <!-- Unit frames -->
+        <div id="frames">
+          <div class="unit-frame" id="player-frame">
+            <div class="portrait knight"><span class="lvl" id="pf-level">1</span></div>
+            <div class="bars">
+              <div class="uf-name">Hero</div>
+              <div class="bar hp"><div class="fill" id="pf-hp"></div><span id="pf-hp-text"></span></div>
+              <div class="bar rage"><div class="fill" id="pf-rage"></div><span id="pf-rage-text"></span></div>
+            </div>
+          </div>
+          <div id="pet-frame" class="hidden"><span class="pet-icon">🐺</span><div><div class="pet-name">Wolf</div><div class="bar hp"><div class="fill" id="pet-hp"></div><span id="pet-hp-text"></span></div></div></div>
+          <div class="unit-frame hidden" id="target-frame">
+            <div class="portrait skull"><span class="lvl" id="tf-level">1</span></div>
+            <div class="bars">
+              <div class="uf-name" id="tf-name">Target</div>
+              <div class="bar hp"><div class="fill" id="tf-hp"></div><span id="tf-hp-text"></span></div>
+              <div class="uf-sub" id="tf-sub"></div>
+              <div id="tf-debuffs"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Minimap -->
+        <div id="minimap-wrap">
+          <div id="zone-name">Brightwood Village</div>
+          <canvas id="minimap" width="160" height="160"></canvas>
+          
+          
+          
+          <div id="side-btns"><button id="btn-map" class="round-btn" aria-label="World map">🗺️<span class="btn-label">Map</span></button><button id="btn-talents" class="round-btn" aria-label="Talents">⭐<span id="tal-badge" class="badge hidden">0</span><span class="btn-label">Talents</span></button><button id="btn-menu" class="round-btn" aria-label="Menu">☰<span class="btn-label">Menu</span></button></div>
+          <button id="btn-bags" class="round-btn" aria-label="Character and bags">🎒<span id="bag-badge" class="badge hidden">0</span><span class="btn-label">Character</span></button>
+        </div>
+
+        <div id="quest-tracker"></div>
+
+        <!-- Bottom -->
+        <div id="action-bar"></div>
+        <button id="btn-target" class="round-btn" aria-label="Next target">🎯</button>
+        <button id="btn-editbar" class="round-btn" aria-label="Edit action bar">✏️</button>
+        <div id="spellbook" class="panel hidden">
+          <div class="sb-head"><h2>Spellbook</h2><button id="sb-reset" class="btn">Reset bar</button><button id="sb-done" class="btn gold">Done</button></div>
+          <p id="sb-hint" class="sb-hint"></p>
+          <div id="sb-list" class="sb-list"></div>
+        </div>
+        <button id="btn-interact" class="hidden"></button>
+        <div id="cast-bar" class="hidden"><div class="fill" id="cast-fill"></div><span id="cast-name"></span></div>
+        <div id="xp-bar"><div class="fill" id="xp-fill"></div><span id="xp-text"></span></div>
+        <div id="gold">0 <span class="coin"></span></div>
+
+        <div id="banner"></div>
+        <div id="error"></div>
+        <div id="toasts"></div>
+        <div id="combat-log"></div>
+      </div>
+
+      <div id="stick"><div id="stick-knob"></div></div>
+
+      <!-- Dialog -->
+      <div id="dialog" class="hidden">
+        <div class="panel">
+          <div class="dlg-head"><div class="dlg-portrait" id="dlg-portrait"></div><div><div id="dlg-name"></div><div id="dlg-title"></div></div></div>
+          <h2 id="dlg-quest"></h2>
+          <p id="dlg-text"></p>
+          <div id="dlg-objectives"></div>
+          <div id="dlg-rewards"></div>
+          <div class="dlg-buttons"><button id="dlg-accept" class="btn gold">Accept</button><button id="dlg-close" class="btn">Goodbye</button></div>
+        </div>
+      </div>
+
+      <!-- Menu -->
+      <div id="menu" class="hidden">
+        <div class="panel">
+          <h2>Menu</h2>
+          <h3>Controls</h3>
+          <p class="small">Left side: drag to move · Right side: drag to look, pinch to zoom, tap an enemy to target it · Buttons: use abilities · Tap your portrait or 🎒 for your character, gear and bags · 🗺️ or tap the minimap for the world map · ⭐ for talents. Keyboard: WASD, mouse drag, 1–9, 0, - and = for the action bar, Tab, C or B for character, M for map, N for talents.</p>
+          <div class="dlg-buttons"><button id="menu-difficulty" class="btn">Difficulty: Normal</button><button id="menu-sound" class="btn">Sound: On</button><button id="menu-graphics" class="btn">Graphics: Auto</button><button id="menu-fps" class="btn">FPS: Off</button><button id="menu-fullscreen" class="btn">Fullscreen</button><button id="menu-switch" class="btn">Switch character</button><button id="menu-close" class="btn gold">Resume</button></div>
+          <p class="small" style="margin-top:10px">Your progress saves automatically on this device.</p>
+        </div>
+      </div>
+
+      <!-- Talents -->
+      <div id="talents" class="hidden">
+        <div class="panel tal-panel">
+          <div class="inv-head"><h2>Talents</h2><span id="tal-points" class="tal-points"></span><button id="tal-reset" class="btn tal-resetbtn">Reset talents</button><button id="tal-close" class="round-btn" aria-label="Close">✕</button></div>
+          <div class="tal-body"><div id="tal-trees" class="tal-trees"></div><div id="tal-detail" class="tal-detail"></div></div>
+        </div>
+      </div>
+
+      <!-- World map -->
+      <div id="worldmap" class="hidden">
+        <div class="panel wm-panel">
+          <div class="wm-head"><div class="wm-tabs" id="wm-tabs"></div><button id="wm-close" class="round-btn" aria-label="Close map">✕</button></div>
+          <div class="wm-body">
+            <div class="wm-mapwrap"><canvas id="wm-canvas" aria-label="Map of the zone"></canvas></div>
+            <div class="wm-side" id="wm-quests"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Character / bags / merchant -->
+      <div id="inventory" class="hidden">
+        <div class="panel inv-panel">
+          <div class="inv-head"><h2 id="inv-title">Character</h2><button id="inv-close" class="round-btn" aria-label="Close">✕</button></div>
+          <div class="inv-body">
+            <div class="inv-left" id="inv-left"></div>
+            <div class="inv-right">
+              <div class="inv-sub bag-head"><span>Bags <span id="bag-cap" class="bag-cap"></span></span><span id="inv-gold" class="inv-gold"></span></div>
+              <div class="bag-tools">
+                <div id="bag-chips" class="bag-chips"></div>
+                <div class="bag-tools-row">
+                  <input id="bag-search" type="search" placeholder="Search your bags" autocomplete="off" autocorrect="off" spellcheck="false" />
+                  <button id="bag-sort" class="btn bag-toolbtn" title="Sort bags">⇅ Sort</button>
+                </div>
+              </div>
+              <div id="inv-bags" class="bag-grid"></div>
+              <div id="bag-slots" class="bag-slots"></div>
+              <div class="bag-actions">
+                <button id="inv-equipall" class="btn hidden">▲ Equip upgrades</button>
+                <button id="inv-selljunk" class="btn hidden">Sell junk</button>
+              </div>
+            </div>
+          </div>
+          <div id="inv-detail" class="hidden"></div>
+        </div>
+      </div>
+
+      <!-- Character list -->
+      <div id="char-select" class="hidden">
+        <div class="cs-inner">
+          <h2 class="cs-title">Your characters</h2>
+          <div id="char-list" class="char-list"></div>
+          <div class="char-buttons">
+            <button id="char-new" class="btn">＋ New character</button>
+            <button id="char-delete" class="btn danger" disabled>Delete</button>
+            <button id="char-play" class="btn gold big" disabled>Play</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Class selection -->
+      <div id="class-select" class="hidden">
+        <div class="cs-inner">
+          <h2 class="cs-title">Choose your hero</h2>
+          <div class="cs-cards">
+            <button class="cs-card" data-cls="warrior">
+              <span class="cs-icon">🛡️</span><span class="cs-name">Warrior</span>
+              <span class="cs-role">Melee · Rage</span>
+              <span class="cs-blurb">A sturdy knight in plate armour. Fights up close with sword and shield, builds Rage with every blow, and can throw axes to pull enemies.</span>
+            </button>
+            <button class="cs-card" data-cls="mage">
+              <span class="cs-icon">🔥</span><span class="cs-name">Mage</span>
+              <span class="cs-role">Ranged · Mana</span>
+              <span class="cs-blurb">A wielder of fire and frost. Casts powerful spells from afar and freezes enemies in place, but is fragile up close.</span>
+            </button>
+            <button class="cs-card" data-cls="priest">
+              <span class="cs-icon">✨</span><span class="cs-name">Priest</span>
+              <span class="cs-role">Ranged · Mana · Heals</span>
+              <span class="cs-blurb">Wields holy light and dark shadow. Smites foes, wears them down with Shadow Word: Pain, and heals and shields themself.</span>
+            </button>
+            <button class="cs-card" data-cls="hunter">
+              <span class="cs-icon">🏹</span><span class="cs-name">Hunter</span>
+              <span class="cs-role">Ranged · Mana · Pet</span>
+              <span class="cs-blurb">Shoots from afar with a crossbow while a loyal wolf holds the enemy's attention. Stings, slows and leaps away.</span>
+            </button>
+          </div>
+          <label class="cs-label" for="cs-name">Name</label>
+          <input id="cs-name" maxlength="16" value="Hero" autocomplete="off" autocorrect="off" spellcheck="false" />
+          <div class="char-buttons">
+            <button id="cs-back" class="btn hidden">Back</button>
+            <button id="cs-start" class="btn gold big" disabled>Begin your journey</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portal travel -->
+      <div id="travel-confirm" class="hidden">
+        <div class="panel center">
+          <h2 id="tc-title">Travel</h2>
+          <p id="tc-text"></p>
+          <div class="dlg-buttons"><button id="tc-stay" class="btn">Stay here</button><button id="tc-go" class="btn gold">Travel</button></div>
+        </div>
+      </div>
+      <div id="travel" class="hidden"><div class="travel-inner"><div class="travel-label">Travelling to</div><div id="travel-name"></div><div class="travel-spinner"></div></div></div>
+
+      <!-- Death -->
+      <div id="death" class="hidden">
+        <div class="panel center">
+          <h2>You have died</h2>
+          <p>Your spirit drifts back to Brightwood Village.</p>
+          <button id="btn-release" class="btn gold">Release Spirit</button>
+        </div>
+      </div>
+
+      <!-- Loading / title -->
+      <div id="title">
+        <div class="title-inner">
+          <div class="logo">EMBERFALL</div>
+          <div class="tagline">A tale of the Vale</div>
+          <div id="load-bar"><div id="load-fill"></div></div>
+          <div id="load-text">Loading the vale…</div>
+          <button id="btn-play" class="btn gold big hidden">Enter the World</button>
+          <button id="btn-new" class="btn small-link hidden">Characters</button>
+        </div>
+        <div class="credits">Characters &amp; props: KayKit by Kay Lousberg (CC0)</div>
+      </div>
+
+      <div id="rotate">
+        <div class="rotate-icon">📱↻</div>
+        <div>Please rotate your device to landscape</div>
+      </div>
+    </div>
+  </body>
+</html>

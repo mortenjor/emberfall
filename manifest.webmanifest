@@ -1,0 +1,10 @@
+{
+  "name": "Emberfall",
+  "short_name": "Emberfall",
+  "start_url": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#120d08",
+  "theme_color": "#120d08",
+  "icons": [{ "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }]
+}
