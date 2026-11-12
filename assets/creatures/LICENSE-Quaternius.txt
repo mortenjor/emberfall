@@ -1,7 +1,6 @@
 Animals, monsters and pirate characters by Quaternius (https://quaternius.com):
-  - Ultimate Animated Animals (July 2021): Wolf, Stag, Bull, Horse, Horse_White, Donkey, Alpaca, Deer, Fox, Husky
-  - Cute Animated Monsters (Aug 2020): Bat, Bee, Cactus, Crab, Cyclops, Demon, Ghost, Mushroom, Tree, Yeti, YellowDragon,
-    Cthulhu, GreenDemon, Skull
+  - Ultimate Animated Animals (July 2021): Wolf, Stag, Bull
+  - Cute Animated Monsters (Aug 2020): Bat, Bee, Cactus, Crab, Cyclops, Demon, Ghost, Mushroom, Tree, Yeti, YellowDragon
   - Pirate Kit (Nov 2023): Anne, Captain Barbarossa, Henry, Sharky, Skeleton
 
 License: CC0 1.0 Universal (Public Domain Dedication)
