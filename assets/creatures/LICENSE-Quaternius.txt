@@ -5,6 +5,9 @@ Animals, monsters and pirate characters by Quaternius (https://quaternius.com):
   - Ultimate Monsters (Flying): DragonEvolved (the flight masters' dragon; from the CC0 mirror in
     github.com/series-ai/jam-ready-assets, quaternius-ultimate-monsters)
   - Pirate Kit (Nov 2023): Anne, Captain Barbarossa, Henry, Sharky, Skeleton
+  - LowPoly Animated Knight ("Knight Character Animated"): QKnight, the Bastion Knights, with its helmet,
+    shoulder pads and sword (https://opengameart.org/content/lowpoly-animated-knight); built with
+    tools/prep-knight.mjs
 
 License: CC0 1.0 Universal (Public Domain Dedication)
 https://creativecommons.org/publicdomain/zero/1.0/
