@@ -14,8 +14,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@500;700&display=swap" rel="stylesheet" />
     <title>Emberfall</title>
-    <script type="module" crossorigin src="./assets/index-ClvRT_QO.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DD3UNYU3.css">
+    <script type="module" crossorigin src="./assets/index-DpWpjtF5.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-UPwkSnKs.css">
   </head>
   <body>
     <div id="app">
@@ -135,9 +135,12 @@
 
       <!-- Flight master -->
       <div id="flights" class="hidden">
-        <div class="panel stable-panel">
+        <div class="panel stable-panel flight-panel">
           <div class="inv-head"><h2>Flight paths</h2><span id="flights-money" class="st-money"></span><button id="flights-close" class="round-btn" aria-label="Close">✕</button></div>
-          <div id="flights-body"></div>
+          <div class="fl-wrap">
+            <canvas id="flights-map"></canvas>
+            <div id="flights-body"></div>
+          </div>
         </div>
       </div>
       <div id="flight-bar" class="hidden"><span>🐉 Flying to <b id="flight-dest"></b></span><button id="flight-skip" class="btn">Skip ▸▸</button></div>
