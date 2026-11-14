@@ -14,8 +14,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@500;700&display=swap" rel="stylesheet" />
     <title>Emberfall</title>
-    <script type="module" crossorigin src="./assets/index-ruhzhFJE.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BFdyLhRq.css">
+    <script type="module" crossorigin src="./assets/index-YCG-0r-h.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DMERNJtG.css">
   </head>
   <body>
     <div id="app">
@@ -183,6 +183,7 @@
                 <div class="bag-tools-row">
                   <input id="bag-search" type="search" placeholder="Search your bags" autocomplete="off" autocorrect="off" spellcheck="false" />
                   <button id="bag-sort" class="btn bag-toolbtn" title="Sort bags">⇅ Sort</button>
+                  <button id="bag-mark" class="btn bag-toolbtn" title="Mark several items (or Ctrl/⌘-click, Shift-click a range)">☑ Mark</button>
                 </div>
               </div>
               <div id="inv-bags" class="bag-grid"></div>
@@ -190,6 +191,8 @@
               <div class="bag-actions">
                 <button id="inv-equipall" class="btn hidden">▲ Equip upgrades</button>
                 <button id="inv-selljunk" class="btn hidden">Sell junk</button>
+                <button id="inv-sellmarked" class="btn gold hidden">Sell marked</button>
+                <button id="inv-unmark" class="btn hidden" aria-label="Clear marks">✕ Unmark</button>
               </div>
             </div>
           </div>
